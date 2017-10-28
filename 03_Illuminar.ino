@@ -7,23 +7,30 @@ int irDelta=100;
 int irBase=20;
 int irMax=230;
 
+
 int t1=0;
 int t2=0;
 
-int state= 0; // 0= off, 1 = on
+int state=0; // 0= off, 1 = on
+int readyForChange=1;
 
 
 int pwmOut=9;
 
-
+unsigned long lastTime;
+int timeDelta=50;
 
 
 void switchState(){
-  if(state == 0){
-    state = 1;
-  }else{
-    state = 0;
+  if(readyForChange==1){
+    if(state == 0 ){
+      state = 1;
+    }else{
+      state = 0;
+    }
+    readyForChange=0;
   }
+
   
 }
 
@@ -59,13 +66,29 @@ void setup()
 
 void loop() { 
 
+
+  unsigned long thisTime= millis();
+  
+  if( thisTime >= lastTime + timeDelta){
+    Serial.print(thisTime);
+    Serial.println("BINGO");
+    
+    lastTime=thisTime;
+    
+  }
   
   readIR();
 
 
-  if( irSensorVal > (t1 + irDelta) ){
+  if( irSensorVal >= (t1 + irDelta) ){
     switchState();
   }
+
+  if(irSensorVal <  (t1 + irDelta) ){
+     readyForChange=1; 
+  }
+
+
   
   if(state == 1){
     analogWrite(pwmOut,200);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255  
@@ -87,7 +110,7 @@ void loop() {
 
     
   Serial.println("");
-  delay(20);    
+
 }
 
 
