@@ -20,11 +20,35 @@ int maxDim=255;
 int dimVal=200;
 int readyForChange=1;
 
+int dimTimeValuesAmount=20;
+int dimTimeValues[20];
+
+
+
+void updataDimTimeValues(int value){
+  for (int i=0; i < (dimTimeValuesAmount -1); i++){
+    int tm = dimTimeValues[i];
+    int j= i+1;
+    dimTimeValues[j] = tm;
+  }
+  dimTimeValues[0]=value;
+}
+
+
+
+
 
 int pwmOut=9;
 
 unsigned long lastTime;
 int timeDelta=500;
+
+
+
+
+
+
+
 
 
 void switchState(){
@@ -67,14 +91,20 @@ void setup()
   pinMode(pwmOut, OUTPUT);     
   digitalWrite(irOutLed, HIGH);  
 
-  Serial.begin(9600);
+  //Serial.begin(9600);
+
+
+  for (int i=0; i < dimTimeValuesAmount; i++){
+    dimTimeValues[i] = dimVal;
+  } 
+
   
 }
 
 
 
 
-void loop() { 
+void loop() {
 
 
   unsigned long thisTime= millis();
@@ -96,7 +126,10 @@ void loop() {
     }else if(handposition == 1){
       if(thisTime >= lastTime + timeDelta){
         if(dimMode == 0){
-          dimMode=1;
+          if( state == 1){
+             dimMode=1;
+            }
+          
         }
       }     
     } 
@@ -112,6 +145,7 @@ void loop() {
     }
       handposition=0;
       dimMode=0;
+      dimVal=dimTimeValues[(dimTimeValuesAmount-1)];
   }
 
 
@@ -125,33 +159,39 @@ if(dimMode==1){
   if(dimVal > maxDim){
     dimVal = maxDim;
   }
-  
+  updataDimTimeValues(dimVal);
 }
 
   
   if(state == 1){
     analogWrite(pwmOut,dimVal);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255  
   }else if(state == 0){
-    analogWrite(pwmOut,0);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255  
-
+    analogWrite(pwmOut,0);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255   
   }
 
 
-   Serial.print("STATE: ");
-   Serial.print(state);
+  // Serial.print("STATE: ");
+  // Serial.print(state);
    
-   Serial.print("   HAND: ");
-   Serial.print(handposition);
+ //  Serial.print("   HAND: ");
+ //  Serial.print(handposition);
 
 
-  Serial.print("   IR Val:"); 
+ // Serial.print("   IR Val:"); 
 
-  Serial.print(irSensorVal);
+ // Serial.print(irSensorVal);
 
-   Serial.print("   DIMVAL: ");
-   Serial.print(dimVal);
-    
-  Serial.println("");
+  // Serial.print("   DIMVAL: ");
+  // Serial.print(dimVal);
+
+
+
+
+
+  
+  //Serial.println("");
+
+  delay(40);
 
 }
 
