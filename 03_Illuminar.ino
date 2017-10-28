@@ -143,9 +143,9 @@ void loop() {
         }
       }
     }
-      handposition=0;
-      dimMode=0;
-      dimVal=dimTimeValues[(dimTimeValuesAmount-1)];
+    handposition=0;
+    dimMode=0;
+    dimVal=dimTimeValues[(dimTimeValuesAmount-1)];
   }
 
 
