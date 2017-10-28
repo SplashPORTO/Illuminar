@@ -1,2 +1,2 @@
-# 03_Illumina
+# 03_Illuminar
 Light Sensor Control
