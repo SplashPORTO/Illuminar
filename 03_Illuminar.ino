@@ -4,8 +4,8 @@ int irSensor = 0; // IR phototransistor
 float irSensorVal=0;
 
 int irDelta=100;
-int irBase=25;
-int irMax=200;
+int irBase=20;
+int irMax=190;
 
 
 int t1=0;
@@ -148,7 +148,8 @@ if(dimMode==1){
 
   Serial.print(irSensorVal);
 
-
+   Serial.print("   DIMVAL: ");
+   Serial.print(dimVal);
     
   Serial.println("");
 
