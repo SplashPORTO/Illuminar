@@ -98,6 +98,10 @@ void setup()
     dimTimeValues[i] = dimVal;
   } 
 
+  // change the prescaler for pwm
+  //noInterrupts();           // disable all interrupts
+  //TCCR1B = 0x01;   // Timer 1: PWM 9 & 10 @ 32 kHz
+  //interrupts();             // enable all interrupts
   
 }
 
@@ -151,7 +155,7 @@ void loop() {
 
 
 if(dimMode==1){
-  dimVal= map(irSensorVal, 0, 1000, 0, 255);
+  dimVal= map(irSensorVal, 200, 1000, 0, 255);
   if(dimVal < minDim){
     dimVal = minDim;
   }
