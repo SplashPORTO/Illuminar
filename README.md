@@ -21,5 +21,4 @@ To dim the light; hold your hand over the sensor and after 1/2 Second, the syste
 
 # Authors
 Andres Bott.
-
-Nuno Soares
+Nuno Splash
