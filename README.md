@@ -1,4 +1,4 @@
-# 03_Illuminar
+# Illuminar
 Light Sensor Control
 
 
